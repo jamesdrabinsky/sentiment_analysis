@@ -27,7 +27,7 @@ I will build a model that can predict the sentiment of a movie review, social me
 
 I obtained the IMDB movie reviews dataset directly from Kaggle.  The dataset can be found [here](https://www.kaggle.com/utathya/imdb-review-dataset).
 
-I also scraped 5732 (after eliminating duplicates) using the Twython, a Python wrapper for the Twitter API.  That code can be found in this notebook <a href="Notebooks/06_tweet_scraper.ipynb">tweet scraper notebook</a>
+I also scraped 5732 tweets (after eliminating duplicates) using Twython, a Python wrapper for the Twitter API.  That code can be found in the <a href="Notebooks/06_Tweet_Scraper.ipynb">tweet scraper notebook</a>
 
 ---
 
@@ -57,24 +57,24 @@ One area where I did find a difference between the positive and negative classes
 
 My first vectorization technique was using the GloVe pretrained word embedding.  Word embeddings map semantic meaning into a geometric space.  I used a 300-dimensional GloVe embedding of 400k words computed on a 2014 dump of English Wikipedia.  From this word embedding I computed the document embedding by taking the component-wise mean of its component word embeddings.  
 
-Next I used tfidf top generate vectors. Even though tfidf considers the relative frequency or rareness of tokens in a document against their frequency in other documents, it does not account for the semantic relationship between words like a word embedding does.  To address this issue, I decided to use the Doc2Vec vectorization method.  Doc2vec offers an entirely different algorithm than tfidf in that it represents each document by a dense vector which is trained to predict words in the document. Its construction gives the algorithm the potential to overcome the weaknesses of bag-of-words models.  
+Next I used tfidf to generate vectors. Even though tfidf considers the relative frequency or rareness of tokens in a document against their frequency in other documents, it does not account for the semantic relationship between words like a word embedding does.  To address this issue, I decided to use the Doc2Vec vectorization method.  Doc2vec offers an entirely different algorithm than tfidf in that it represents each document by a dense vector which is trained to predict words in the document. Its construction gives the algorithm the potential to overcome the weaknesses of bag-of-words models.  
 
 There are two methods of implementing Doc2Vec: Distributed Memory (DM) and Distributed Bag of Words (DBOW). DM attempts to predict a word given its previous words and paragraph vector. DBOW predicts a random group of words in a paragraph given only its paragraph vector.  I consistently got my best scores with the DBOW model.  
 
-When pairing the Doc2Vec models with classifiers, the two pairings that produced the best scores were Doc2Vec DBOW with logistic regression and Doc2Vec DBOW with gradient boost.  I decided to use the gradient boost classifier in my production model.  I made this decision because gradient boosting is an ensemble technique which means it has many different predictors trying to predict the same target variable, and as a boosting method, it adds one classifier at a time so that the next classifier is trained to improve the already trained ensemble.  Logistic regression is a linear classifier and is not equipped to make the types of decision that gradient boosting does.  
+When pairing the Doc2Vec models with classifiers, the two pairings that produced the best scores were Doc2Vec DBOW with logistic regression and Doc2Vec DBOW with gradient boost.  I decided to use the gradient boost classifier in my production model.  I made this decision because gradient boosting is an ensemble technique which means it has many different predictors trying to predict the same target variable, and as a boosting method, it adds one classifier at a time so that the next classifier is trained to improve the already trained ensemble.  Logistic regression is a linear classifier and is not as powerful as gradient boosting.  
 
 
 | Model                          | Score
 |------------------------------  |---------------
 | Gradient Boost w Doc2Vec       | 0.87 
 | LogReg w TFIDF and SVD         | 0.89      
-| Logistic Regression w Doc2Vec  | 0.88
+| LogReg w Doc2Vec               | 0.88
 
 ---
 
 ## Application
 
-This notebook <a href="Notebooks/07_Application_of_Model.ipynb">application notebook</a> is a demonstration of how to apply the sentiment analysis model I have built.  I have imported 5732 tweets from the past week, all containing the hashtag #FirstMan (in reference to a movie that was recently released).  The tweets will be processed as follows:
+This <a href="Notebooks/07_Application_of_Model.ipynb">application notebook</a> is a demonstration of how to apply the sentiment analysis model I have built.  I have imported 5732 tweets from the past week, all containing the hashtag #FirstMan (in reference to a movie that was recently released).  The tweets will be processed as follows:
 
 - They will be concatenated to the original movie review dataframe on the 'review' column
 - They will be preprocessed by the review_cleaner function 
@@ -85,7 +85,7 @@ I applied my model to the tweets and compared the output to that of TextBlob and
 
 | Tool             | positive 	| negative | neutral  | 
 |----------------- |-----------	|--------  |----------|
-| my_model  	   | 4816      	| 916      | XXX      | 
+| my_model  	   | 5162      	| 570      | XXX      | 
 | textblob     	   | 3715      	| 717      | 1300     | 
 | vader_sentiment  | 3321      	| 1007     | 1404     |     
 
