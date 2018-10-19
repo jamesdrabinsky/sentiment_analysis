@@ -4,7 +4,7 @@
 
 The goals of this project are to:
 
-1) , Attempt to build a sentiment analysis model through the use of various vectorization methods, dimensionality reduction and classifiers.
+1) Attempt to build a sentiment analysis model through the use of various vectorization methods, dimensionality reduction and classifiers.
 2) Build an application of this model so that it could be applied to other documents.
 3) Evaluate the effectiveness of this model by comparing it to other sentiment analysis tools, such as TextBlob and Vader Sentiment.
 

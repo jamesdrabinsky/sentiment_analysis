@@ -27,8 +27,7 @@ I will build a model that can predict the sentiment of a movie review, social me
 
 I obtained the IMDB movie reviews dataset directly from Kaggle.  The dataset can be found [here](https://www.kaggle.com/utathya/imdb-review-dataset).
 
-I also scraped 5732 (after eliminating duplicates) using the Twython, a Python wrapper for the Twitter API.  That code can be found in this notebook 
-<a href="code/06_tweet_scraper.ipynb">tweet scraper notebook</a>
+I also scraped 5732 (after eliminating duplicates) using the Twython, a Python wrapper for the Twitter API.  That code can be found in this notebook <a href="Notebooks/06_tweet_scraper.ipynb">tweet scraper notebook</a>
 
 ---
 
@@ -75,7 +74,7 @@ When pairing the Doc2Vec models with classifiers, the two pairings that produced
 
 ## Application
 
-This notebook <a href="code/07_Application_of_Model.ipynb">application notebook</a> is a demonstration of how to apply the sentiment analysis model I have built.  I have imported 5732 tweets from the past week, all containing the hashtag #FirstMan (in reference to a movie that was recently released).  The tweets will be processed as follows:
+This notebook <a href="Notebooks/07_Application_of_Model.ipynb">application notebook</a> is a demonstration of how to apply the sentiment analysis model I have built.  I have imported 5732 tweets from the past week, all containing the hashtag #FirstMan (in reference to a movie that was recently released).  The tweets will be processed as follows:
 
 - They will be concatenated to the original movie review dataframe on the 'review' column
 - They will be preprocessed by the review_cleaner function 
